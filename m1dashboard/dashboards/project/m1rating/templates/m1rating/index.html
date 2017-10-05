@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}
+    {% trans "Rating Summary" %}
+{% endblock %}
+
+{% block page_header %}
+  <div style="float:right;text-align:right;max-width:300px;">
+    <h6>TimeZone: {{ time_zone }}</h6>
+  </div>
+  {% include "horizon/common/_page_header.html" with title=_("Rating Summary") %}
+{% endblock page_header %}
+{% block main %}
+<hr class="header_rule"></hr>
+<h2>Total Cost for today - ${{ total_today|floatformat:2 }}</h2>
+<h5>({{ start_period_today }} to {{ end_period }})</h5>
+<hr class="header_rule">
+<table class="table table-bordered table-striped" id="m1rating">
+    <thead>
+        <tr class="tablesorter-headerRow">
+            <th class="normal_column">Service type</th>
+            <th class="normal_column">Cost</th>
+        </tr>
+    </thead>
+    <tbody>
+            {% for name, rate in total_dict.items %}
+            <tr class="{% cycle 'odd' 'even' %}">
+                <td class="normal_column">{{ name }}</td>
+                <td class="cost_column"><u title="$ {{ rate|floatformat:10 }}" style="cursor:pointer;">$ {{ rate|floatformat:2 }}</u></td>
+            </tr>
+            {% endfor %}
+    </tbody>
+</table>
+<h2>Total Cost for trailing 7 Days - ${{total_week|floatformat:2}}</h2>
+<h5>({{ start_period_week }} to {{ end_period }})</h5>
+<hr class="header_rule">
+<table class="table table-bordered table-striped" id="m1rating">
+    <thead>
+        <tr class="tablesorter-headerRow">
+            <th class="normal_column">Service type</th>
+            <th class="normal_column">Cost</th>
+        </tr>
+    </thead>
+    <tbody>
+            {% for name, rate in total_week_dict.items %}
+            <tr class="{% cycle 'odd' 'even' %}">
+                <td class="normal_column">{{ name }}</td>
+                <td class="cost_column"><u title="$ {{ rate|floatformat:10 }}" style="cursor:pointer;">$ {{ rate|floatformat:2 }}</u></td>
+            </tr>
+            {% endfor %}
+    </tbody>
+</table>
+
+<h2>Total Cost for trailing month - ${{total_month|floatformat:2}}</h2>
+<h5>({{ start_period_month }} to {{ end_period }})</h5>
+<hr class="header_rule">
+
+<table class="table table-bordered table-striped" id="m1rating">
+    <thead>
+        <tr class="tablesorter-headerRow">
+            <th class="normal_column">Service type</th>
+            <th class="normal_column">Cost</th>
+        </tr>   
+    </thead>    
+    <tbody> 
+            {% for name, rate in total_month_dict.items %}
+            <tr class="{% cycle 'odd' 'even' %}">
+                <td class="normal_column">{{ name }}</td>
+                <td class="cost_column"><u title="$ {{ rate|floatformat:10 }}" style="cursor:pointer;">${{ rate|floatformat:2 }}</u></td>
+            </tr>
+            {% endfor %}
+    </tbody>    
+</table> 
+<h2>Total Cost for Cloud resources from tenant creation date - ${{total_cloud|floatformat:2}}</h2>
+<h5>({{ start_period_cloud }} to {{ end_period }})</h5>
+<hr class="header_rule">
+<table class="table table-bordered table-striped" id="m1rating">
+    <thead>
+        <tr class="tablesorter-headerRow">
+            <th class="normal_column">Service type</th>
+            <th class="normal_column">Cost</th>
+        </tr>
+    </thead>
+    <tbody>
+            {% for name, rate in total_cloud_dict.items %}
+            <tr class="{% cycle 'odd' 'even' %}">
+                <td class="normal_column">{{ name }}</td>
+                <td class="cost_column"><u title="$ {{ rate|floatformat:10 }}" style="cursor:pointer;">$ {{ rate|floatformat:2 }}</u></td>
+            </tr>
+            {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
